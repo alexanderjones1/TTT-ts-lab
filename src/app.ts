@@ -19,45 +19,47 @@ let board: number[], turn: number, winner: boolean, tie: boolean
 
 const squareEls = document.querySelectorAll('.sqr')
 
-const messageEl = document.getElementById('message')
+const messageEl = document.getElementById('message')!
 
-const resetBtnEl = document.getElementById('reset')
+const resetBtnEl = document.querySelector<HTMLButtonElement>('#reset')
+
+const boardEl = document.querySelector<HTMLElement>('.board')!
 
 /*----------------------------- Event Listeners -----------------------------*/
 
-document.querySelector('.board').addEventListener('click', handleClick)
+boardEl.addEventListener('click', handleClick)
 
-resetBtnEl.addEventListener('click', init)
+resetBtnEl?.addEventListener('click', init)
 
 /*-------------------------------- Functions --------------------------------*/
 
 init()
 function init() {
-    board = [null, null, null, null, null, null, null, null, null, ]
+    board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     turn = 1
     winner = false
     tie = false
     render()
 }
 
-function render() {
+function render(): void {
     updateBoard()
     updateMessage()
 }
 
-function updateBoard() {
+function updateBoard(): void {
     board.forEach((element, idx) => {
         if (element === 1) {
-            squareEls[idx].innerText = 'x'
+            squareEls[idx].textContent = 'x'
         } else if (element === -1) {
-            squareEls[idx].innerText = 'o'
+            squareEls[idx].textContent = 'o'
         } else {
-            squareEls[idx].innerText = ''
+            squareEls[idx].textContent = ''
         }
     })
 }
 
-function updateMessage() {
+function updateMessage(): void {
     if (winner === false && tie === false) {
         messageEl.textContent = (turn === 1 ? 'Player X turn.' : 'Player O turn.')
     } else if (winner === false && tie === true) {
@@ -67,7 +69,9 @@ function updateMessage() {
     }
 }
 
-function handleClick(evt) {
+function handleClick(evt: MouseEvent): void {
+    if(!(evt.target instanceof HTMLElement)) return
+
     let sqIdx = +evt.target.id.replace('sq', '')
     if (board[sqIdx] !== null) {
         return
@@ -82,11 +86,11 @@ function handleClick(evt) {
     render()
 }
 
-function placePiece(idx) {
+function placePiece(idx: number) {
     board[idx] = turn
 }
 
-function checkForTie() {
+function checkForTie(): void {
     if (board.includes(null)) return
     tie = true
     // const hasNull = board.some(function(element) {
