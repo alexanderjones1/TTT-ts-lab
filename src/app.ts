@@ -91,7 +91,7 @@ function placePiece(idx: number) {
 }
 
 function checkForTie(): void {
-    if (board.includes(null)) return
+    if (board.includes(0)) return
     tie = true
     // const hasNull = board.some(function(element) {
     //     if (element === null) {
@@ -102,7 +102,7 @@ function checkForTie(): void {
     // })
 }
 
-function checkForWinner() {
+function checkForWinner(): void {
     winningCombos.forEach(function(arr) {
         let sum = 0
         arr.forEach(function(idx) {
@@ -114,7 +114,7 @@ function checkForWinner() {
     })
 }
 
-function switchPlayerTurn() {
+function switchPlayerTurn(): void {
     if (!winner) turn *= -1
     // if (winner === true) {
     //     return

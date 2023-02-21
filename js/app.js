@@ -77,7 +77,7 @@ function placePiece(idx) {
     board[idx] = turn;
 }
 function checkForTie() {
-    if (board.includes(null))
+    if (board.includes(0))
         return;
     tie = true;
     // const hasNull = board.some(function(element) {
