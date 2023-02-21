@@ -23,7 +23,7 @@ resetBtnEl?.addEventListener('click', init);
 /*-------------------------------- Functions --------------------------------*/
 init();
 function init() {
-    board = [null, null, null, null, null, null, null, null, null];
+    board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     turn = 1;
     winner = false;
     tie = false;
@@ -61,7 +61,7 @@ function handleClick(evt) {
     if (!(evt.target instanceof HTMLElement))
         return;
     let sqIdx = +evt.target.id.replace('sq', '');
-    if (board[sqIdx] !== null) {
+    if (board[sqIdx] !== 0) {
         return;
     }
     else if (winner === true) {
@@ -77,7 +77,7 @@ function placePiece(idx) {
     board[idx] = turn;
 }
 function checkForTie() {
-    if (board.includes(null))
+    if (board.includes(0))
         return;
     tie = true;
     // const hasNull = board.some(function(element) {
@@ -92,8 +92,6 @@ function checkForWinner() {
     winningCombos.forEach(function (arr) {
         let sum = 0;
         arr.forEach(function (idx) {
-            if (board[idx] === null)
-                return;
             sum += board[idx];
         });
         if (sum === 3 || sum === -3) {

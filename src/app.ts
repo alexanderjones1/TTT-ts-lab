@@ -13,7 +13,7 @@ const winningCombos = [
 
 /*---------------------------- Variables (state) ----------------------------*/
 
-let board: Array<number | null>, turn: number, winner: boolean, tie: boolean
+let board: number[], turn: number, winner: boolean, tie: boolean
 
 /*------------------------ Cached Element References ------------------------*/
 
@@ -35,7 +35,7 @@ resetBtnEl?.addEventListener('click', init)
 
 init()
 function init() {
-    board = [null, null, null, null, null, null, null, null, null]
+    board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     turn = 1
     winner = false
     tie = false
@@ -73,7 +73,7 @@ function handleClick(evt: MouseEvent): void {
     if(!(evt.target instanceof HTMLElement)) return
 
     let sqIdx = +evt.target.id.replace('sq', '')
-    if (board[sqIdx] !== null) {
+    if (board[sqIdx] !== 0) {
         return
     } else if (winner === true) {
         return
@@ -91,7 +91,7 @@ function placePiece(idx: number) {
 }
 
 function checkForTie(): void {
-    if (board.includes(null)) return
+    if (board.includes(0)) return
     tie = true
     // const hasNull = board.some(function(element) {
     //     if (element === null) {
@@ -106,7 +106,6 @@ function checkForWinner(): void {
     winningCombos.forEach(function(arr) {
         let sum = 0
         arr.forEach(function(idx) {
-          if (board[idx] === null) return
             sum += board[idx]
         })
         if (sum === 3 || sum === -3) {
