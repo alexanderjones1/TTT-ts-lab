@@ -13,7 +13,7 @@ const winningCombos = [
 
 /*---------------------------- Variables (state) ----------------------------*/
 
-let board: number[], turn: number, winner: boolean, tie: boolean
+let board: Array<number | null>, turn: number, winner: boolean, tie: boolean
 
 /*------------------------ Cached Element References ------------------------*/
 
@@ -35,7 +35,7 @@ resetBtnEl?.addEventListener('click', init)
 
 init()
 function init() {
-    board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    board = [null, null, null, null, null, null, null, null, null]
     turn = 1
     winner = false
     tie = false
@@ -48,7 +48,7 @@ function render(): void {
 }
 
 function updateBoard(): void {
-    board.forEach((element, idx) => {
+    board.forEach((element: number | null, idx: number) => {
         if (element === 1) {
             squareEls[idx].textContent = 'x'
         } else if (element === -1) {
@@ -91,7 +91,7 @@ function placePiece(idx: number) {
 }
 
 function checkForTie(): void {
-    if (board.includes(0)) return
+    if (board.includes(null)) return
     tie = true
     // const hasNull = board.some(function(element) {
     //     if (element === null) {
@@ -106,6 +106,7 @@ function checkForWinner(): void {
     winningCombos.forEach(function(arr) {
         let sum = 0
         arr.forEach(function(idx) {
+          if (board[idx] === null) return
             sum += board[idx]
         })
         if (sum === 3 || sum === -3) {
